@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiskAware - Health Risk Assessment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+    <br><br><br>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleSwitch = document.getElementById("toggle-theme");
+            const themeLabel = document.getElementById("theme-label");
+
+            // Load preference
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark-mode");
+                toggleSwitch.checked = true;
+                themeLabel.textContent = "☀️";
+            }
+
+            toggleSwitch.addEventListener("change", function () {
+                document.body.classList.toggle("dark-mode");
+                const isDark = document.body.classList.contains("dark-mode");
+                themeLabel.textContent = isDark ? "☀️" : "🌙";
+                localStorage.setItem("theme", isDark ? "dark" : "light");
+            });
+        });
+    </script>
+
+    <div class="container mt-4">
+        <div class="header-container d-flex justify-content-between align-items-center px-4">
+            <span class="header">RiskAware - Health Risk Assessment</span>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="/select_disease" class="btn btn-light btn-lg">Proceed to Assessment</a>
+
+                <!-- Switch + Emoji -->
+                <div class="form-check form-switch d-flex align-items-center m-0">
+                    <input class="form-check-input" type="checkbox" id="toggle-theme" role="switch">
+                    <label class="form-check-label fs-4 ms-2 m-0" for="toggle-theme" id="theme-label">🌙</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="content text-center">
+            <h2>Welcome to RiskAware</h2>
+            <p>Assess your health risk for various diseases using machine learning models.</p>
+
+            <!-- 4 cards in a row -->
+            <div class="card-row">
+                <div class="card" onclick="scrollToDetails('breast')">
+                    <h3>Breast Cancer</h3>
+                </div>
+                <div class="card" onclick="scrollToDetails('liver')">
+                    <h3>Liver Disease</h3>
+                </div>
+                <div class="card" onclick="scrollToDetails('heart')">
+                    <h3>Heart Disease</h3>
+                </div>
+                <div class="card" onclick="scrollToDetails('kidney')">
+                    <h3>Kidney Disease</h3>
+                </div>
+            </div>
+
+
+            <!-- Full width card below -->
+            <div class="details-card" id="details-section">
+                <table id="table" class="table table-bordered mt-4 table-striped">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="light-blue-header">Disease</th>
+                            <th class="light-blue-header">Symptoms</th>
+                            <th class="light-blue-header">Diagnosis</th>
+                            <th class="light-blue-header">Treatment</th>
+                            <th class="light-blue-header">Prevention</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="breast">Breast Cancer</td>
+                            <td>Lump in breast, pain, nipple discharge</td>
+                            <td>Mammogram, biopsy, ultrasound</td>
+                            <td>Surgery, chemotherapy, radiation therapy</td>
+                            <td>Regular screening, healthy lifestyle</td>
+                        </tr>
+                        <tr>
+                            <td>Heart Disease</td>
+                            <td>Chest pain, shortness of breath, fatigue</td>
+                            <td>ECG, stress test, blood tests</td>
+                            <td>Medications, angioplasty, lifestyle changes</td>
+                            <td>Quit smoking, exercise, balanced diet</td>
+                        </tr>
+                        <tr>
+                            <td>Liver Disease</td>
+                            <td>Fatigue, jaundice, swelling in abdomen</td>
+                            <td>Blood tests, imaging (CT/MRI), liver biopsy</td>
+                            <td>Medications, lifestyle changes, liver transplant (severe cases)</td>
+                            <td>Limit alcohol, vaccination, healthy diet</td>
+                        </tr>
+                        <tr>
+                            <td>Kidney Disease</td>
+                            <td>Swelling, changes in urination, fatigue</td>
+                            <td>Blood tests, urine tests, ultrasound</td>
+                            <td>Dialysis, medications, kidney transplant</td>
+                            <td>Control blood pressure, stay hydrated, healthy diet</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr>
+                <hr>
+
+                <h1>Breast Cancer</h1>
+
+                <p>Breast cancer is a malignant tumor that develops from the cells of the breast. It is the most common
+                    cancer among women worldwide, affecting both developed and developing countries. While predominantly
+                    occurring in women, men can also develop breast cancer, though it is rare.</p>
+
+                <h2>Anatomy and Physiology of the Breast</h2>
+                <p>The human breast consists of lobules (milk-producing glands), ducts (which transport milk to the
+                    nipple), and stromal tissues, including fat and connective tissues. Lymphatic vessels in the breast
+                    drain into lymph nodes, primarily located under the arm (axillary lymph nodes). Understanding this
+                    anatomy is crucial, as breast cancer commonly originates in the ducts or lobules.</p>
+
+                <h2>Types of Breast Cancer</h2>
+                <ul>
+                    <li><strong>Non-invasive (in situ) cancers:</strong> These cancers remain confined to their origin
+                        without invading surrounding tissues. Examples include Ductal Carcinoma In Situ (DCIS) and
+                        Lobular Carcinoma In Situ (LCIS).</li>
+                    <li><strong>Invasive (infiltrating) cancers:</strong> These cancers spread into surrounding breast
+                        tissues. The most common types are Invasive Ductal Carcinoma (IDC) and Invasive Lobular
+                        Carcinoma (ILC).</li>
+                </ul>
+                <p>Other rare forms include Inflammatory Breast Cancer and Paget's Disease of the breast.</p>
+
+                <div class="image-container">
+                    <img src="{{ url_for('static',
+                    filename='photos/b_c_2.jpg') }}" alt="Breast Cancer Image 1">
+                    <img src="{{ url_for('static',
+                    filename='photos/b_c_3.jpeg.jpg') }}" alt="Breast Cancer Image 2">
+                    <img src="{{ url_for('static',
+                    filename='photos/b_c_4.png') }}" alt="Breast Cancer Image 2">
+                </div>
+
+                <h2>Risk Factors</h2>
+                <h3>Non-modifiable factors:</h3>
+                <ul>
+                    <li><strong>Gender:</strong> Being female is the most significant risk factor.</li>
+                    <li><strong>Age:</strong> Risk increases with age.</li>
+                    <li><strong>Genetic mutations:</strong> Inherited mutations in genes like BRCA1 and BRCA2 elevate
+                        risk.</li>
+                    <li><strong>Family history:</strong> Having close relatives with breast cancer increases risk.</li>
+                    <li><strong>Personal history:</strong> Previous breast cancer diagnosis heightens the risk of
+                        recurrence.</li>
+                </ul>
+
+                <h3>Modifiable factors:</h3>
+                <ul>
+                    <li><strong>Reproductive history:</strong> Early menstruation (before age 12) or late menopause
+                        (after 55) increases exposure to hormones, raising risk.</li>
+                    <li><strong>Hormone replacement therapy (HRT):</strong> Long-term use of combined
+                        estrogen-progestogen therapy during menopause is linked to higher risk.</li>
+                    <li><strong>Alcohol consumption:</strong> Higher alcohol intake correlates with increased risk.</li>
+                    <li><strong>Obesity and physical inactivity:</strong> Excess weight and lack of exercise are
+                        associated with higher risk.</li>
+                </ul>
+
+                <h2>Pathophysiology</h2>
+                <p>Breast cancer arises from genetic mutations leading to uncontrolled cell growth. Estrogen exposure
+                    plays a significant role in promoting this growth. Mutations in tumor suppressor genes like BRCA1
+                    and BRCA2 impair DNA repair mechanisms, facilitating cancer development. Overexpression of
+                    oncogenes, such as HER2, also contributes to tumor progression.</p>
+
+                <h2>Symptoms</h2>
+                <ul>
+                    <li>A lump or thickening in the breast or underarm.</li>
+                    <li>Change in breast size, shape, or appearance.</li>
+                    <li>Dimpling or puckering of the skin.</li>
+                    <li>Nipple inversion or discharge.</li>
+                    <li>Redness or scaling of the nipple or breast skin.</li>
+                </ul>
+                <p>Some individuals may not exhibit noticeable symptoms, underscoring the importance of regular
+                    screenings.</p>
+
+                <h2>Diagnosis</h2>
+                <ul>
+                    <li><strong>Imaging tests:</strong>
+                        <ul>
+                            <li><strong>Mammography:</strong> X-ray imaging to detect abnormalities.</li>
+                            <li><strong>Ultrasound:</strong> Determines if a lump is solid or fluid-filled.</li>
+                            <li><strong>MRI:</strong> Provides detailed images, especially useful in high-risk
+                                individuals.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Biopsy:</strong> Removal of tissue samples for microscopic examination to confirm cancer
+                        presence and type.</li>
+                    <li><strong>Laboratory tests:</strong> Hormone receptor tests (estrogen and progesterone) and HER2
+                        status assessments guide treatment decisions.</li>
+                </ul>
+
+                <h2>Staging</h2>
+                <p>Staging determines the extent of cancer spread and guides treatment planning. The TNM system
+                    assesses:</p>
+                <ul>
+                    <li><strong>Tumor size (T):</strong> Size and extent of the primary tumor.</li>
+                    <li><strong>Node involvement (N):</strong> Degree of spread to nearby lymph nodes.</li>
+                    <li><strong>Metastasis (M):</strong> Presence of distant spread to other body parts.</li>
+                </ul>
+                <p>Stages range from 0 (non-invasive) to IV (metastatic), with higher stages indicating more advanced
+                    disease.</p>
+
+                <h2>Treatment</h2>
+                <ul>
+                    <li><strong>Surgery:</strong>
+                        <ul>
+                            <li><strong>Lumpectomy:</strong> Removal of the tumor and a margin of surrounding tissue.
+                            </li>
+                            <li><strong>Mastectomy:</strong> Removal of the entire breast.</li>
+                        </ul>
+                    </li>
+                    <li id="liver"><strong>Radiation therapy:</strong> Uses high-energy rays to destroy cancer cells,
+                        often
+                        post-surgery.</li>
+                    <li><strong>Chemotherapy:</strong> Systemic treatment with drugs to kill or inhibit cancer cells,
+                        used before (neoadjuvant) or after (adjuvant) surgery.</li>
+                    <li><strong>Hormonal therapy:</strong> For hormone receptor-positive cancers, medications like
+                        tamoxifen or aromatase inhibitors block hormones that fuel cancer growth.</li>
+                    <li><strong>Targeted therapy:</strong> Drugs like trastuzumab (Herceptin) target HER2-positive
+                        breast cancer.</li>
+                </ul>
+
+
+                <hr>
+                <hr>
+
+                <h1>Liver Diseases</h1>
+
+                <p>Liver diseases encompass a wide range of conditions that impair liver function, affecting its ability
+                    to process
+                    nutrients, filter blood, and combat infections. Understanding these diseases is crucial, as the
+                    liver plays a
+                    vital role in maintaining overall health.</p>
+
+                <h2>Anatomy and Physiology of the Liver</h2>
+                <p>The liver is a large, reddish-brown organ located in the upper right quadrant of the abdomen, beneath
+                    the
+                    diaphragm. It performs numerous essential functions, including:</p>
+                <ul>
+                    <li><strong>Metabolism:</strong> Processing carbohydrates, proteins, and fats.</li>
+                    <li><strong>Detoxification:</strong> Filtering toxins from the blood.</li>
+                    <li><strong>Bile Production:</strong> Producing bile to aid in fat digestion.</li>
+                    <li><strong>Storage:</strong> Storing vitamins and minerals.</li>
+                </ul>
+
+                <h2>Types of Liver Diseases</h2>
+                <ul>
+                    <li><strong>Hepatitis:</strong> Inflammation of the liver, often caused by viral infections
+                        (Hepatitis A, B, C,
+                        D, and E).</li>
+                    <li><strong>Fatty Liver Disease:</strong>
+                        <ul>
+                            <li><strong>Non-Alcoholic Fatty Liver Disease (NAFLD):</strong> Fat accumulation in the
+                                liver not
+                                related to alcohol consumption.</li>
+                            <li><strong>Alcoholic Fatty Liver Disease:</strong> Fat accumulation due to excessive
+                                alcohol intake.
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Cirrhosis:</strong> Scarring of the liver tissue, leading to impaired function.</li>
+                    <li><strong>Liver Cancer:</strong> Malignant tumors originating in the liver, such as hepatocellular
+                        carcinoma.
+                    </li>
+                    <li><strong>Genetic Disorders:</strong> Conditions like hemochromatosis and Wilson's disease, which
+                        affect liver
+                        function.</li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="{{ url_for('static',
+                    filename='photos/L_d_1.webp') }}" alt="liver disease Image 1">
+                    <img src="{{ url_for('static',
+                    filename='photos/L_d_2.png') }}" alt="liver disease Image 2">
+                    <img src="{{ url_for('static',
+                    filename='photos/L_d_3.jpg') }}" alt="liver disease Image 3">
+                </div>
+
+                <h2>Causes</h2>
+                <p>Liver diseases can arise from various factors:</p>
+                <ul>
+                    <li><strong>Infections:</strong> Viral infections like hepatitis.</li>
+                    <li><strong>Alcohol Abuse:</strong> Chronic excessive alcohol consumption.</li>
+                    <li><strong>Obesity:</strong> Leading to fat accumulation in the liver.</li>
+                    <li><strong>Genetics:</strong> Inherited conditions affecting liver metabolism.</li>
+                    <li><strong>Toxins and Medications:</strong> Exposure to harmful substances.</li>
+                </ul>
+
+                <h2>Symptoms</h2>
+                <p>Early stages of liver disease may be asymptomatic. As the disease progresses, symptoms may include:
+                </p>
+                <ul>
+                    <li><strong>Jaundice:</strong> Yellowing of the skin and eyes.</li>
+                    <li><strong>Abdominal Pain:</strong> Particularly in the upper right quadrant.</li>
+                    <li><strong>Fatigue:</strong> Persistent tiredness.</li>
+                    <li><strong>Nausea:</strong> Feeling of sickness.</li>
+                    <li><strong>Swelling:</strong> In legs and abdomen due to fluid accumulation.</li>
+                </ul>
+
+                <h2>Diagnosis</h2>
+                <p>Diagnosing liver diseases involves:</p>
+                <ul>
+                    <li><strong>Blood Tests:</strong> Assessing liver enzymes and function.</li>
+                    <li><strong>Imaging Studies:</strong> Ultrasound, CT scans, or MRI to visualize the liver.</li>
+                    <li><strong>Liver Biopsy:</strong> Sampling liver tissue for microscopic examination.</li>
+                </ul>
+
+                <h2>Treatment</h2>
+                <p>Treatment depends on the specific liver disease:</p>
+                <ul>
+                    <li><strong>Lifestyle Modifications:</strong> Such as limiting alcohol intake and adopting a healthy
+                        diet.</li>
+                    <li><strong>Medications:</strong> Antivirals for hepatitis or medications to manage symptoms.</li>
+                    <li><strong>Surgery:</strong> Including liver transplantation in severe cases.</li>
+                </ul>
+
+                <h2>Prevention</h2>
+                <p>Preventive measures include:</p>
+                <ul>
+                    <li><strong>Vaccination:</strong> Against hepatitis A and B.</li>
+                    <li><strong>Healthy Lifestyle:</strong> Maintaining a balanced diet and regular exercise.</li>
+                    <li id="heart"><strong>Moderate Alcohol Consumption:</strong> Limiting alcohol intake to reduce
+                        risk.</li>
+                </ul>
+
+                <p>Understanding liver diseases is essential for early detection and effective management, ensuring the
+                    maintenance
+                    of liver health and overall well-being.</p>
+
+                <hr>
+                <hr>
+
+
+                <h1>Heart Disease</h1>
+
+                <p>Heart disease, also known as cardiovascular disease, refers to a range of conditions affecting the
+                    heart and blood vessels. It is a leading cause of death globally, but many forms can be prevented or
+                    managed with lifestyle changes and medical interventions.</p>
+
+                <h2>Anatomy and Physiology of the Heart</h2>
+                <p>The heart is a muscular organ located in the chest, responsible for pumping blood throughout the
+                    body. It consists of four chambers: two upper atria and two lower ventricles. The heart's primary
+                    functions include:</p>
+                <ul>
+                    <li><strong>Pumping Oxygenated Blood:</strong> Delivering oxygen-rich blood to tissues and organs.
+                    </li>
+                    <li><strong>Removing Waste Products:</strong> Transporting carbon dioxide and other waste products
+                        to be expelled.</li>
+                    <li><strong>Maintaining Blood Pressure:</strong> Regulating the force of blood against artery walls.
+                    </li>
+                </ul>
+
+                <h2>Types of Heart Disease</h2>
+                <ul>
+                    <li><strong>Coronary Artery Disease (CAD):</strong> Narrowing or blockage of the coronary arteries,
+                        often due to atherosclerosis.</li>
+                    <li><strong>Arrhythmias:</strong> Irregular heartbeats, which can be too fast (tachycardia), too
+                        slow (bradycardia), or erratic.</li>
+                    <li><strong>Heart Failure:</strong> The heart's inability to pump blood effectively, leading to
+                        fluid buildup in the lungs and other tissues.</li>
+                    <li><strong>Heart Valve Diseases:</strong> Malfunctions of one or more of the heart's four valves,
+                        affecting blood flow.</li>
+                    <li><strong>Congenital Heart Disease:</strong> Structural heart abnormalities present at birth.</li>
+                    <li><strong>Cardiomyopathy:</strong> Diseases of the heart muscle that impair its ability to pump
+                        blood.</li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="{{ url_for('static',
+                    filename='photos/h_d_1.jpeg.jpg') }}" alt="Heart disease Image 1">
+                    <img src="{{ url_for('static',
+                    filename='photos/h_d_2.jpg') }}" alt="Heart disease Image 2">
+                    <img src="{{ url_for('static',
+                    filename='photos/h_d_3.jpg') }}" alt="Heart disease Image 3">
+                </div>
+
+                <h2>Causes</h2>
+                <p>The causes of heart disease vary depending on the specific condition but often include:</p>
+                <ul>
+                    <li><strong>Atherosclerosis:</strong> Buildup of fatty plaques in the arteries.</li>
+                    <li><strong>High Blood Pressure:</strong> Exerting excessive force against artery walls.</li>
+                    <li><strong>High Cholesterol:</strong> Elevated levels of low-density lipoprotein (LDL) cholesterol.
+                    </li>
+                    <li><strong>Smoking:</strong> Damaging blood vessels and reducing oxygen in the blood.</li>
+                    <li><strong>Diabetes:</strong> Increasing the risk of atherosclerosis.</li>
+                    <li><strong>Obesity:</strong> Straining the heart and contributing to other risk factors.</li>
+                    <li><strong>Sedentary Lifestyle:</strong> Lack of physical activity leading to poor cardiovascular
+                        health.</li>
+                    <li><strong>Genetics:</strong> Family history of heart disease.</li>
+                </ul>
+
+                <h2>Symptoms</h2>
+                <p>Symptoms of heart disease can vary based on the specific condition but may include:</p>
+                <ul>
+                    <li><strong>Chest Pain (Angina):</strong> Discomfort or pressure in the chest.</li>
+                    <li><strong>Shortness of Breath:</strong> Difficulty breathing during activities or at rest.</li>
+                    <li><strong>Palpitations:</strong> Irregular or rapid heartbeats.</li>
+                    <li><strong>Fatigue:</strong> Unusual tiredness.</li>
+                    <li><strong>Swelling:</strong> Edema in the legs, ankles, or abdomen.</li>
+                    <li><strong>Dizziness or Fainting:</strong> Lightheadedness or loss of consciousness.</li>
+                </ul>
+
+                <h2>Diagnosis</h2>
+                <p>Diagnosing heart disease involves various tests and evaluations:</p>
+                <ul>
+                    <li><strong>Physical Examination:</strong> Assessing vital signs and listening to heart sounds.</li>
+                    <li><strong>Electrocardiogram (ECG or EKG):</strong> Recording the heart's electrical activity.</li>
+                    <li><strong>Echocardiogram:</strong> Using ultrasound to visualize heart structures.</li>
+                    <li><strong>Stress Testing:</strong> Monitoring the heart during physical exertion.</li>
+                    <li><strong>Cardiac Catheterization:</strong> Inserting a catheter into the heart to examine blood
+                        vessels and pressures.</li>
+                    <li><strong>Blood Tests:</strong> Measuring levels of cholesterol, triglycerides, and other markers.
+                    </li>
+                </ul>
+
+                <h2>Treatment</h2>
+                <p>Treatment options depend on the type and severity of heart disease:</p>
+                <ul>
+                    <li><strong>Lifestyle Modifications:</strong> Adopting a heart-healthy diet, engaging in regular
+                        exercise, quitting smoking, and limiting alcohol intake.</li>
+                    <li><strong>Medications:</strong> Prescribing drugs to manage blood pressure, cholesterol, heart
+                        rhythm, or other related conditions.</li>
+                    <li><strong>Procedures and Surgeries:</strong>
+                        <ul>
+                            <li><strong>Angioplasty and Stenting:</strong> Opening narrowed arteries and placing stents
+                                to keep them open.</li>
+                            <li><strong>Coronary Artery Bypass Grafting (CABG):</strong> Surgically creating a new
+                                pathway for blood flow around blocked arteries.</li>
+                            <li><strong>Implantable Devices:</strong> Using pacemakers or defibrillators to regulate
+                                heart rhythm.</li>
+                            <li><strong>Valve Repair or Replacement:</strong> Fixing or replacing malfunctioning heart
+                                valves.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h2>Prevention</h2>
+                <p>Preventing heart disease involves addressing risk factors:</p>
+                <ul>
+                    <li><strong>Regular Physical Activity:</strong> Engaging in at least 150 minutes of
+                        moderate-intensity exercise per week.</li>
+                    <li><strong>Healthy Diet:</strong> Consuming a balanced diet rich in fruits, vegetables, whole
+                        grains, lean proteins, and healthy fats.</li>
+                    <li><strong>Weight Management:</strong> Maintaining a healthy weight to reduce strain on the heart.
+                    </li>
+                    <li id="kidney"><strong>Smoking Cessation:</strong> Avoiding tobacco products to improve
+                        cardiovascular health.
+                    </li>
+                    <li><strong>Regular Health Screenings:</strong> Monitoring blood pressure, cholesterol, and glucose
+                        levels.</li>
+                    <li><strong>Stress Management:</strong> Practicing relaxation techniques to reduce stress.</li>
+                </ul>
+
+                <p>Heart disease is a serious but often preventable condition. Early detection, lifestyle changes, and
+                    appropriate medical care can significantly improve heart health and overall well-being.</p>
+
+
+                <hr>
+                <hr>
+
+
+                <h1>Kidney Diseases: A Comprehensive Overview</h1>
+                <p>Kidney diseases encompass various conditions that impair the function of the kidneys, which are
+                    essential for filtering waste, regulating fluids, and maintaining electrolyte balance. Understanding
+                    the causes, symptoms, and treatment options is crucial for managing kidney health.</p>
+
+                <h2>Types of Kidney Diseases</h2>
+                <ul>
+                    <li><strong>Acute Kidney Injury (AKI):</strong> Sudden loss of kidney function due to infections,
+                        dehydration, or toxins.</li>
+                    <li><strong>Chronic Kidney Disease (CKD):</strong> Progressive decline in kidney function over time,
+                        classified into five stages.</li>
+                    <li><strong>Glomerulonephritis:</strong> Inflammation of kidney filtering units, often due to
+                        infections or autoimmune diseases.</li>
+                    <li><strong>Polycystic Kidney Disease (PKD):</strong> A genetic disorder leading to fluid-filled
+                        cysts in the kidneys.</li>
+                    <li><strong>Kidney Stones:</strong> Hard deposits forming in the kidneys, causing pain and urinary
+                        blockages.</li>
+                    <li><strong>Urinary Tract Infections (UTIs):</strong> Infections that can spread to the kidneys,
+                        leading to complications.</li>
+                </ul>
+
+                <div class="image-container">
+                    <img src="{{ url_for('static',
+                    filename='photos/k_d_1.webp') }}" alt="kidney disease Image 1">
+                    <img src="{{ url_for('static',
+                    filename='photos/k_d_2.avif') }}" alt="kidney disease Image 2">
+                    <img src="{{ url_for('static',
+                    filename='photos/k_d_3.webp') }}" alt="kidney disease Image 3">
+                </div>
+
+                <h2>Causes and Risk Factors</h2>
+                <ul>
+                    <li><strong>Diabetes:</strong> High blood sugar damages kidney tissues over time.</li>
+                    <li><strong>Hypertension:</strong> High blood pressure affects kidney blood vessels, impairing
+                        function.</li>
+                    <li><strong>Genetic Disorders:</strong> Conditions like PKD run in families, increasing disease
+                        risk.</li>
+                    <li><strong>Autoimmune Diseases:</strong> Diseases like lupus can damage the kidneys.</li>
+                    <li><strong>Obstructions:</strong> Kidney stones or tumors blocking urine flow may lead to kidney
+                        damage.</li>
+                </ul>
+
+                <h2>Symptoms</h2>
+                <ul>
+                    <li>Fatigue and weakness.</li>
+                    <li>Swelling in the legs and feet.</li>
+                    <li>Frequent or decreased urination.</li>
+                    <li>Blood or foamy appearance in urine.</li>
+                    <li>Shortness of breath and nausea.</li>
+                </ul>
+
+                <h2>Diagnosis</h2>
+                <ul>
+                    <li><strong>Blood Tests:</strong> Checking creatinine and urea levels for kidney function.</li>
+                    <li><strong>Urine Tests:</strong> Detecting protein, blood, or infections.</li>
+                    <li><strong>Imaging:</strong> Ultrasound and CT scans for structural abnormalities.</li>
+                    <li><strong>Biopsy:</strong> Analyzing kidney tissue for disease identification.</li>
+                </ul>
+
+                <h2>Treatment and Prevention</h2>
+                <ul>
+                    <li><strong>Medications:</strong> Controlling blood pressure, diabetes, and infections.</li>
+                    <li><strong>Lifestyle Changes:</strong> Maintaining a kidney-friendly diet and regular exercise.
+                    </li>
+                    <li><strong>Dialysis:</strong> Removing waste from the blood in severe cases.</li>
+                    <li><strong>Kidney Transplant:</strong> Replacing a failing kidney with a healthy donor kidney.</li>
+                </ul>
+
+
+                <hr>
+                <hr>
+
+
+            </div>
+        </div>
+    </div>
+    <script>
+        function scrollToDetails(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

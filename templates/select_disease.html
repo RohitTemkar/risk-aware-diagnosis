@@ -1,0 +1,447 @@
+<!-- templates/select_disease.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Disease</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleSwitch = document.getElementById("toggle-theme");
+            const themeLabel = document.getElementById("theme-label");
+
+            // Load preference
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark-mode");
+                toggleSwitch.checked = true;
+                themeLabel.textContent = "☀️";
+            }
+
+            toggleSwitch.addEventListener("change", function () {
+                document.body.classList.toggle("dark-mode");
+                const isDark = document.body.classList.contains("dark-mode");
+                themeLabel.textContent = isDark ? "☀️" : "🌙";
+                localStorage.setItem("theme", isDark ? "dark" : "light");
+            });
+        });
+
+
+        function updateForm() {
+            var disease = document.getElementById("disease").value;
+            var formContainer = document.getElementById("form-container");
+
+            formContainer.style.opacity = "0";
+
+            setTimeout(() => {
+                formContainer.innerHTML = ""; // Clear previous form fields
+
+                let formContent = "";
+
+                if (disease === "breast_cancer") {
+                    formContent = `
+    <div class="card p-4 shadow-sm mb-4">
+        <h5 class="mb-4 text-center fw-bold">Breast Cancer Inputs</h5>
+
+        <div class="row mb-3 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Clump Thickness</label></div>
+            <div class="col-md-3"><input type="number" name="clump_thickness" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Uniform Cell Size</label></div>
+            <div class="col-md-3"><input type="number" name="uniform_cell_size" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Uniform Cell Shape</label></div>
+            <div class="col-md-3"><input type="number" name="uniform_cell_shape" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Marginal Adhesion</label></div>
+            <div class="col-md-3"><input type="number" name="marginal_adhesion" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Single Epithelial Cell Size</label></div>
+            <div class="col-md-3"><input type="number" name="single_epithelial_size" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Bare Nuclei</label></div>
+            <div class="col-md-3"><input type="number" name="bare_nuclei" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Bland Chromatin</label></div>
+            <div class="col-md-3"><input type="number" name="bland_chromatin" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Normal Nucleoli</label></div>
+            <div class="col-md-3"><input type="number" name="normal_nucleoli" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Mitoses</label></div>
+            <div class="col-md-3"><input type="number" name="mitoses" class="form-control" min="0" required></div>
+        </div>
+
+    </div>
+    `;
+                }
+                else if (disease === "liver_disease") {
+                    formContent = `
+    <div class="card p-4 shadow-sm mt-4">
+        <h5 class="mb-4 text-center fw-bold">Liver Disease Inputs</h5>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Age</label></div>
+            <div class="col-md-3"><input type="number" name="Age" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end">
+                <label class="form-label fw-bold">Gender</label>
+            </div>
+            <div class="col-md-3">
+                <select name="Gender" class="form-select" required>
+                    <option value="" disabled selected>Choose Gender</option>
+                    <option value="1">Male (1)</option>
+                    <option value="0">Female (0)</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Total Bilirubin</label></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="Total_Bilirubin" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Direct Bilirubin</label></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="Direct_Bilirubin" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Alkaline Phosphotase</label></div>
+            <div class="col-md-3"><input type="number" name="Alkaline_Phosphotase" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Alamine Aminotransferase</label></div>
+            <div class="col-md-3"><input type="number" name="Alamine_Aminotransferase" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Aspartate Aminotransferase</label></div>
+            <div class="col-md-3"><input type="number" name="Aspartate_Aminotransferase" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Total Proteins</label></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="Total_Proteins" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Albumin</label></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="Albumin" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Albumin & Globulin Ratio</label></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="Albumin_and_Globulin_Ratio" class="form-control" min="0" required></div>
+        </div>
+    </div>
+    `;
+                } else if (disease === "heart_disease") {
+                    formContent = `
+    <div class="card p-4 shadow-sm mt-4">
+        <h5 class="mb-4 text-center fw-bold">Heart Disease Inputs</h5>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Age</label></div>
+            <div class="col-md-3"><input type="number" name="age" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end">
+                <label class="form-label fw-bold">Gender</label>
+            </div>
+            <div class="col-md-3">
+                <select name="sex" class="form-select" required>
+                    <option value="" disabled selected>Choose Gender</option>
+                    <option value="1">Male (1)</option>
+                    <option value="0">Female (0)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+<div class="col-md-3 text-end">
+    <label class="form-label fw-bold">Chest Pain Type</label>
+</div>
+<div class="col-md-3">
+    <select name="cp" class="form-select" required>
+        <option value="" disabled selected>Choose Chest Pain Type</option>
+        <option value="0">Typical Angina (0)</option>
+        <option value="1">Atypical Angina (1)</option>
+        <option value="2">Non-anginal Pain (2)</option>
+        <option value="3">Asymptomatic (3)</option>
+    </select>
+</div>
+
+
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Resting Blood Pressure</label></div>
+            <div class="col-md-3"><input type="number" name="trestbps" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Serum Cholesterol</label></div>
+            <div class="col-md-3"><input type="number" name="chol" class="form-control" min="0" required></div>
+            <div class="col-md-3 text-end">
+                <label class="form-label fw-bold">Fasting Blood Sugar</label>
+            </div>
+            <div class="col-md-3">
+                <select name="fbs" class="form-select" required>
+                    <option value="" disabled selected>Choose Option</option>
+                    <option value="1">Yes (1)</option>
+                    <option value="0">No (0)</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end">
+    <label class="form-label fw-bold">Resting ECG</label>
+</div>
+<div class="col-md-3">
+    <select name="restecg" class="form-select" required>
+        <option value="" disabled selected>Choose Resting ECG Type</option>
+        <option value="0">Normal (0)</option>
+        <option value="1">ST-T Wave Abnormalities (1)</option>
+        <option value="2">Left Ventricular Hypertrophy (2)</option>
+    </select>
+</div>
+
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Max Heart Rate</label></div>
+            <div class="col-md-3"><input type="number" name="thalach" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+<div class="col-md-3 text-end">
+    <label class="form-label fw-bold">Exercise-Induced Angina</label>
+</div>
+<div class="col-md-3">
+    <select name="exang" class="form-select" required>
+        <option value="" disabled selected>Choose Option</option>
+        <option value="0">No Angina (0) - Normal</option>
+        <option value="1">Angina during exercise (1) - Potential Heart Disease</option>
+    </select>
+</div>
+
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Oldpeak</label></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="oldpeak" class="form-control" min="0" required></div>
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+<div class="col-md-3 text-end">
+    <label class="form-label fw-bold">Slope</label>
+</div>
+<div class="col-md-3">
+    <select name="slope" class="form-select" required>
+        <option value="" disabled selected>Choose Slope Type</option>
+        <option value="0">Upsloping (0) - Better Heart Health</option>
+        <option value="1">Flat (1) - Moderate Risk</option>
+        <option value="2">Downsloping (2) - Higher Risk of Heart Disease</option>
+    </select>
+</div>
+
+            <div class="col-md-3 text-end">
+    <label class="form-label fw-bold">Major Vessels (Detected by Fluoroscopy)</label>
+</div>
+<div class="col-md-3">
+    <select name="ca" class="form-select" required>
+        <option value="" disabled selected>Choose Number of Blocked Vessels</option>
+        <option value="0">0 - Normal (No Blockage)</option>
+        <option value="1">1 - Minor Blockage</option>
+        <option value="2">2 - Moderate Blockage</option>
+        <option value="3">3 - Severe Blockage</option>
+    </select>
+</div>
+
+        </div>
+
+        <div class="row mb-3 g-4 align-items-center">
+            <div class="col-md-3 text-end"><label class="form-label fw-bold">Thalassemia (0-3)</label></div>
+            <div class="col-md-3"><input type="number" name="thal" class="form-control" min="0" required></div>
+        </div>
+    </div>
+    `;
+                }
+                else if (disease === "kidney_disease") {
+                    formContent = `
+    <div class="card p-4 shadow-sm mt-4">
+    <h5 class="mb-4 text-center fw-bold">Kidney Disease Inputs</h5>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Age</label></div>
+        <div class="col-md-3"><input type="number" name="age" class="form-control" min="0" required></div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Blood Pressure</label></div>
+        <div class="col-md-3"><input type="number" name="bp" class="form-control" min="0" required></div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Specific Gravity</label></div>
+        <div class="col-md-3"><input type="number" step="0.01" name="sg" class="form-control" min="0" required></div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Albumin</label></div>
+        <div class="col-md-3"><input type="number" name="al" class="form-control" min="0" required></div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Sugar</label></div>
+        <div class="col-md-3"><input type="number" name="su" class="form-control" min="0" required></div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Red Blood Cells</label></div>
+        <div class="col-md-3">
+            <select name="rbc" class="form-control" required>
+                <option value="0">Normal</option>
+                <option value="1">Abnormal</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Pus Cell</label></div>
+        <div class="col-md-3">
+            <select name="pc" class="form-control" required>
+                <option value="0">Normal</option>
+                <option value="1">Abnormal</option>
+            </select>
+        </div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Pus Cell Clumps</label></div>
+        <div class="col-md-3">
+            <select name="pcc" class="form-control" required>
+                <option value="0">Absent</option>
+                <option value="1">Present</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Bacteria</label></div>
+        <div class="col-md-3">
+            <select name="ba" class="form-control" required>
+                <option value="0">Absent</option>
+                <option value="1">Present</option>
+            </select>
+        </div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Blood Glucose Random</label></div>
+        <div class="col-md-3"><input type="number" name="bgr" class="form-control" min="0" required></div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Blood Urea</label></div>
+        <div class="col-md-3"><input type="number" name="bu" class="form-control" min="0" required></div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Serum Creatinine</label></div>
+        <div class="col-md-3"><input type="number" name="sc" class="form-control" min="0" required></div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Sodium</label></div>
+        <div class="col-md-3"><input type="number" name="sod" class="form-control" min="0" required></div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Potassium</label></div>
+        <div class="col-md-3"><input type="number" name="pot" class="form-control" min="0" required></div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Hemoglobin</label></div>
+        <div class="col-md-3"><input type="number" name="hemo" class="form-control" min="0" required></div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Packed Cell Volume</label></div>
+        <div class="col-md-3"><input type="number" name="pcv" class="form-control" min="0" required></div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">WBC Count</label></div>
+        <div class="col-md-3"><input type="number" name="wbcc" class="form-control" min="0" required></div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">RBC Count</label></div>
+        <div class="col-md-3"><input type="number" name="rbcc" class="form-control" min="0" required></div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Hypertension</label></div>
+        <div class="col-md-3">
+            <select name="htn" class="form-control" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Diabetes Mellitus</label></div>
+        <div class="col-md-3">
+            <select name="dm" class="form-control" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">CAD</label></div>
+        <div class="col-md-3">
+            <select name="cad" class="form-control" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Appetite</label></div>
+        <div class="col-md-3">
+            <select name="appet" class="form-control" required>
+                <option value="0">Good</option>
+                <option value="1">Poor</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3 g-4 align-items-center">
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Pedal Edema</label></div>
+        <div class="col-md-3">
+            <select name="pe" class="form-control" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="col-md-3 text-end"><label class="form-label fw-bold">Anemia</label></div>
+        <div class="col-md-3">
+            <select name="ane" class="form-control" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+    `;
+                }
+
+
+                formContainer.innerHTML = formContent;
+                formContainer.style.opacity = "1";
+            }, 200);
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <div class="card p-4 shadow-sm mb-4">
+        <div class="container mt-5">
+            <div class="header-container d-flex justify-content-between align-items-center px-4">
+                <span class="header">RiskAware - Health Risk Assessment</span>
+                <div class="form-check form-switch d-flex align-items-center gap-2">
+                    <input class="form-check-input" type="checkbox" id="toggle-theme">
+                    <label class="form-check-label fs-4" for="toggle-theme" id="theme-label">🌙</label>
+                </div>
+            </div>
+            <div class="card p-4 shadow-sm">
+                <form action="/predict" method="post">
+                    <div class="card p-4 shadow-sm mb-4">
+                        <div class="header-container2">Select Disease for Assessment</div>
+                        <select id="disease" name="disease" class="form-select text-center" onchange="updateForm()"
+                            required>
+                            <option value="" disabled selected>Choose Disease</option>
+                            <option value="breast_cancer">Breast Cancer</option>
+                            <option value="liver_disease">Liver Disease</option>
+                            <option value="heart_disease">Heart Disease</option>
+                            <option value="kidney_disease">Kidney Disease</option>
+                        </select>
+                    </div>
+
+                    <div id="form-container" class="mt-4"></div>
+
+                    <div class="card p-4 shadow-sm">
+                        <button type="submit" class="btn btn-primary">Predict</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
